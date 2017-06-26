@@ -349,5 +349,10 @@ static const anTxtAttribType anOriginalConsoleTextAttribute = [](){
 #else
     #define anLogCode(...)
     #define anMsg(msg)
+    #define anDbg(msg, condition)
+    #define anInfo(msg)
+    #define anAck(msg)
+    #define anWarning(msg)
+    #define anError(msg)
 #endif
 #endif // ANLOGGER_H
