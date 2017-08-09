@@ -567,8 +567,8 @@ inline static void anTmpMessageLogger(
 
     #define anTrk(msg) anMsg(msg, anForegroundWhite)
 
-    #define anDbg(msg, condition) if (condition)\
-                                    anMsg(u8"=> " << msg << u8"\n", anForegroundCyan)
+    #define anIf(condition,...) if (condition) {\
+                                    __VA_ARGS__;}
     #define anInfo(msg) anMsg(u8"   " << msg << u8"\n", anForegroundWhite)
     #define anAck(msg) anMsg(u8"=> " << msg << u8"\n", anForegroundGreen)
     #define anWarn(msg) anMsg(u8"=> " << msg << u8"\n", anForegroundYellow)
@@ -581,7 +581,7 @@ inline static void anTmpMessageLogger(
 #else
     #define anLogCode(...)
     #define anMsg(msg)
-    #define anDbg(msg, condition)
+    #define anIf(condition,...)
     #define anInfo(msg)
     #define anAck(msg)
     #define anWarn(msg)
