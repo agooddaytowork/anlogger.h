@@ -565,7 +565,7 @@ inline static void anTmpMessageLogger(
             anTmpOutputMsgStrVarToStdErr;\
             std::cerr.flush();}
 
-    #define anTrk(msg) anMsg(msg, anForegroundWhite)
+    #define anTrk(msg) anMsg(msg << u8"\n", anForegroundWhite)
 
     #define anIf(condition,...) if (condition) {\
                                     __VA_ARGS__;}
