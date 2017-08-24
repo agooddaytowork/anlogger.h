@@ -154,7 +154,7 @@ static char anStdErrBuffer[BUFSIZ];
     }
 
     #define anSetConsoleTextAttribute(TxtAttrib) \
-        fprintf(stderr, anSetConsoleTextAttributePrefixString(TxtAttrib).c_str())
+        fprintf(stderr, u8"%s", anSetConsoleTextAttributePrefixString(TxtAttrib).c_str())
 
     #define __anFilePathSlashChar__ u'/'
 
@@ -338,7 +338,7 @@ static char anStdErrBuffer[BUFSIZ];
     #define anTmpOutputMsgStrVarDeclaration\
         std::string anTmpOutputMsgStrVar
     #define anTmpOutputMsgStrVarToStdErr\
-        fprintf(stderr, anTmpOutputMsgStrVar.c_str())
+        fprintf(stderr, u8"%s", anTmpOutputMsgStrVar.c_str())
 #endif
 
 #if defined __anWINOS__ && _anLoggerSafeModeForWindowsEnabled
@@ -393,13 +393,13 @@ inline static void anTmpNoLineMessageLogger(
             #endif
         #endif
     #else
-        fprintf(stderr, aNoLineMessage.c_str());
+        fprintf(stderr, u8"%s", aNoLineMessage.c_str());
         std::cerr.flush();
         #ifdef anTmpCurrentMessagePathStrVar
             #ifdef anTmpPrevTxtAtribVar
                 anSetConsoleTextAttribute(_anMessagePathTextAttribute);
             #endif
-            fprintf(stderr, msgPath.c_str());
+            fprintf(stderr, u8"%s", msgPath.c_str());
             std::cerr.flush();
             #ifdef anTmpPrevTxtAtribVar
                 anSetConsoleTextAttribute(prePathAttrib);
