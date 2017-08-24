@@ -30,7 +30,7 @@
 #include <string>
 #include <iostream>
 #include <sstream>
-#include <thread>
+#include <pthread.h>
 #include <chrono>
 #include <time.h>
 #include <vector>
@@ -165,12 +165,7 @@ static char anStdErrBuffer[BUFSIZ];
         || _anLinePositionEnabled || _anTimePositionEnabled)
 
     #if _anThreadIdPositionEnabled
-        inline static long long anGetCurrentStdThreadId(const std::thread::id &currentThreadId) {
-            std::stringstream tmp;
-            tmp << currentThreadId;
-            return std::stoll(tmp.str());
-        }
-        #define __anStdThreadId__ anGetCurrentStdThreadId(std::this_thread::get_id())
+        #define __anPThreadId__ static_cast<unsigned long int>(pthread_self())
     #endif
 
     #if _anFilePositionEnabled
@@ -199,9 +194,9 @@ static char anStdErrBuffer[BUFSIZ];
             #if _anThreadIdPositionEnabled
                 #if _anFunctionPositionEnabled || _anFilePositionEnabled\
                     || _anLinePositionEnabled
-                    const long long &currentThreadId,
+                    const unsigned long int &currentThreadId,
                 #else
-                    const long long &currentThreadId
+                    const unsigned long int &currentThreadId
                 #endif
             #endif
             #if _anFunctionPositionEnabled
@@ -261,9 +256,9 @@ static char anStdErrBuffer[BUFSIZ];
 
     #if _anThreadIdPositionEnabled
         #if _anFunctionPositionEnabled || _anFilePositionEnabled || _anLinePositionEnabled
-            #define anTmpThreadIdParamForMsgPathMacro __anStdThreadId__,
+            #define anTmpThreadIdParamForMsgPathMacro __anPThreadId__,
         #else
-            #define anTmpThreadIdParamForMsgPathMacro __anStdThreadId__
+            #define anTmpThreadIdParamForMsgPathMacro __anPThreadId__
         #endif
     #else
         #define anTmpThreadIdParamForMsgPathMacro
