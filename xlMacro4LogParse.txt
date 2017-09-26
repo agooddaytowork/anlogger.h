@@ -225,7 +225,7 @@ Public Function parseAnLoggerDebugResult(aFilePath As String, _
     Set TimePoints = draftWs.Range(draftWs.Cells(firstDataRowDraftWs, indexColumnTime), draftWs.Cells(lastDataRowDraftWs, indexColumnTime))
     
     Dim tmpRng As Range
-    Set tmpRng = draftWs.Range(draftWs.Cells(firstDataRowDraftWs, 1), draftWs.Cells(lastDataRowDraftWs, 5))
+    Set tmpRng = draftWs.Range(draftWs.Cells(firstDataRowDraftWs, indexColumnTime), draftWs.Cells(lastDataRowDraftWs, indexColumnTime + hdrRngDraftWs.Count - 1))
     tmpRng.Sort Key1:=TimePoints, Order1:=xlAscending, Header:=xlNo
     
     Set TimePoints = draftWs.Range(draftWs.Cells(firstDataRowDraftWs, indexColumnTime), draftWs.Cells(lastDataRowDraftWs, indexColumnTime))
