@@ -204,25 +204,27 @@ Public Function parseAnLoggerDebugResult(aFilePath As String, _
     Open aFilePath For Input As #FileNum
     Do Until EOF(FileNum)
         Line Input #FileNum, aLineOfText
-        lastDataRowDraftWs = lastDataRowDraftWs + 1
-        z = 0
         i = InStrRev(aLineOfText, "|")
-        Do Until z = 5
-            z = z + 1
-            If z = 1 Or _
-                    (z = 2 And isLineLocalized) Or _
-                    (z = 3 And isFileLocalized) Or _
-                    (z = 4 And isFunctionLocalized) Or _
-                    (z = 5 And isThreadLocalized) Then
-                j = i - 1
-                i = InStrRev(aLineOfText, "|", j)
-                draftWs.Cells(lastDataRowDraftWs, z).Value = Mid(aLineOfText, i + 1, j - i)
-                j = i
+        If i > 0 Then
+            z = 0
+            lastDataRowDraftWs = lastDataRowDraftWs + 1
+            Do Until z = 5
+                z = z + 1
+                If z = 1 Or _
+                        (z = 2 And isLineLocalized) Or _
+                        (z = 3 And isFileLocalized) Or _
+                        (z = 4 And isFunctionLocalized) Or _
+                        (z = 5 And isThreadLocalized) Then
+                    j = i - 1
+                    i = InStrRev(aLineOfText, "|", j)
+                    draftWs.Cells(lastDataRowDraftWs, z).Value = Mid(aLineOfText, i + 1, j - i)
+                    j = i
+                End If
+            Loop
+            k = InStr(1, aLineOfText, "<-") - 1
+            If k > 0 Then
+                draftWs.Cells(lastDataRowDraftWs, indexColumnMessage).Value = Trim(Replace(Left(aLineOfText, k), "=>", ""))
             End If
-        Loop
-        k = InStr(1, aLineOfText, "<-") - 1
-        If k > 0 Then
-            draftWs.Cells(lastDataRowDraftWs, indexColumnMessage).Value = Trim(Replace(Left(aLineOfText, k), "=>", ""))
         End If
     Loop
     
