@@ -142,6 +142,11 @@ Sub createSonCustomMenuInAddinsTab()
         .OnAction = "InputForFunction_parseAnLoggerDebugResult"
     End With
     
+        With cbcCutomMenu.Controls.Add(Type:=msoControlButton)
+        .Caption = "alternateRowColor"
+        .OnAction = "alternateRowColor"
+    End With
+    
     
 End Sub
 
@@ -423,3 +428,27 @@ Public Function parseAnLoggerDebugResult(aFilePath As String, _
 ErrorHandler4parseAnLoggerDebugResult:
     MsgBox errorInfo, vbCritical, "ERROR"
 End Function
+
+Sub alternateRowColor()
+    Dim tmpRng As Range
+    Set tmpRng = ActiveSheet.UsedRange
+    tmpRng.FormatConditions.Delete
+    With tmpRng
+        .FormatConditions.Add Type:=xlExpression, Formula1:="=MOD(ROW(),6)=0"
+        .FormatConditions(.FormatConditions.Count).Interior.Color = RGB(255, 255, 153) ' Light Yellow
+        .FormatConditions.Add Type:=xlExpression, Formula1:="=MOD(ROW(),6)=1"
+        .FormatConditions(.FormatConditions.Count).Interior.Color = RGB(204, 255, 255) 'Light Cyan
+        .FormatConditions.Add Type:=xlExpression, Formula1:="=MOD(ROW(),6)=2"
+        .FormatConditions(.FormatConditions.Count).Interior.Color = RGB(192, 192, 192) 'Light Grey
+        .FormatConditions.Add Type:=xlExpression, Formula1:="=MOD(ROW(),6)=3"
+        .FormatConditions(.FormatConditions.Count).Interior.Color = RGB(204, 255, 204) 'Light Green
+        .FormatConditions.Add Type:=xlExpression, Formula1:="=MOD(ROW(),6)=4"
+        .FormatConditions(.FormatConditions.Count).Interior.Color = RGB(255, 204, 153) 'Light Orange
+        .FormatConditions.Add Type:=xlExpression, Formula1:="=MOD(ROW(),6)=5"
+        .FormatConditions(.FormatConditions.Count).Interior.Color = RGB(204, 204, 255) 'Light Violet
+    End With
+End Sub
+
+Sub Test()
+    MsgBox ActiveSheet.Range(ActiveSheet.Cells(65, 2).Address).Address
+End Sub
