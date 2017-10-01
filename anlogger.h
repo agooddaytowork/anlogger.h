@@ -44,10 +44,14 @@
     #include <windows.h>
     #define __anWINOS__
 #elif defined linux || defined _linux_ || defined __linux || defined __linux__\
-        || defined __gnu_linux__
+        || defined __gnu_linux__\
+        || defined __APPLE__\
+        || defined Q_OS_OSX  || defined Q_OS_MACOS || defined Q_OS_MAC
     #define __anLINUXOS__
 #endif
-#ifdef QT_CORE_LIB
+#if defined QT_CORE_LIB\
+        || defined QT_VERSION\
+        || defined Q_OS_OSX  || defined Q_OS_MACOS || defined Q_OS_MAC
     #include <QtGlobal>
     #include <QDebug>
     #include <QVariant>
